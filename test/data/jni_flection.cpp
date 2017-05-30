@@ -6,9 +6,9 @@
 
 namespace
 {
-static constexpr const char class_name[] = "java.lang.Thread"
 jclass get_class()
 {
+	static constexpr const char class_name[] = "java.lang.Thread"
     static jclass clazz = jni::get_class(class_name);
     return clazz;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <jni_defs.h>
+class _jobject;
 
 namespace java
 {
@@ -11,7 +11,7 @@ struct Thread
     Thread();
 
 private:
-    jobject jni____instance;
+    _jobject* jni____instance;
 }
 }
 }
