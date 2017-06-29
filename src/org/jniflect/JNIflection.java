@@ -3,6 +3,8 @@ package org.jniflect;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,15 +55,20 @@ public class JNIflection
                 throw new IllegalStateException("Indentation should have been zero but is not.");
         }
     }
+    
+    private ClassLoader cl;
+    public JNIflection(URL[] jarURLs)
+    {
+        cl = new URLClassLoader(jarURLs, JNIflection.class.getClassLoader());
+    }
 
-    static public String[] jniflect(Collection<String> binary_class_names)
+    public String[] jniflect(Collection<String> binary_class_names)
     {
         JNIflectFile header = new JNIflectFile("jni_resolved_classes.h");
         JNIflectFile source = new JNIflectFile("jni_resolved_classes.cpp");
         
         Set<Class<?>> resolved_classes = new HashSet<Class<?>>();
 
-        ClassLoader cl = JNIflection.class.getClassLoader();
         header.addIndentedLine("#pragma once");
         header.addIndentedLine("");
         header.addIndentedLine("class _jobject;");

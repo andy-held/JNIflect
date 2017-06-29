@@ -3,6 +3,7 @@ package org.jniflect.test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,10 +26,12 @@ public class JNIFlectTest
 		ArrayList<String> whatToFlect = new ArrayList<String>();
         whatToFlect.add("java.lang.String");
 		whatToFlect.add("java.lang.Thread");
+		
+		JNIflection flect = new JNIflection(new URL[]{});
 
 		try
 		{
-			String[] jniflection = JNIflection.jniflect(whatToFlect);
+			String[] jniflection = flect.jniflect(whatToFlect);
 			String expectedHeader = readFile("test/data/jni_flection.h");
 			String expectedSource = readFile("test/data/jni_flection.cpp");
 
