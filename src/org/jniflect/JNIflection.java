@@ -12,49 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class JNIflection
-{   
-    private static class JNIflectFile
-    {
-        public String name = "";
-        public String data = "";
-        private String indentation = "";
-        
-        JNIflectFile(String name)
-        {
-            this.name = name;
-        }
-        
-        public void addLine(String line)
-        {
-            data += line + "\n";
-        }
-        
-        public void addIndentedLine(String line)
-        {
-            addLine(indentation + line);
-        }
-        
-        public void increaseIndentation()
-        {
-            indentation += "    ";
-        }
-        
-        public void decreaseIndentation()
-        {
-            if(indentation.length() > 3)
-            {
-                indentation = indentation.substring(0, indentation.length() - 4);
-            }
-            else
-                throw new IllegalStateException("Indentation cannot be decreased below 0");
-        }
-        
-        public void checkIndentationIsZero()
-        {
-            if(indentation.length() > 0)
-                throw new IllegalStateException("Indentation should have been zero but is not.");
-        }
-    }
+{
     
     private ClassLoader cl;
     public JNIflection(URL[] jarURLs)
@@ -64,8 +22,8 @@ public class JNIflection
 
     public String[] jniflect(Collection<String> binary_class_names)
     {
-        JNIflectFile header = new JNIflectFile("jni_resolved_classes.h");
-        JNIflectFile source = new JNIflectFile("jni_resolved_classes.cpp");
+        CodeFile header = new CodeFile("jni_resolved_classes.h");
+        CodeFile source = new CodeFile("jni_resolved_classes.cpp");
         
         Set<Class<?>> resolved_classes = new HashSet<Class<?>>();
 
